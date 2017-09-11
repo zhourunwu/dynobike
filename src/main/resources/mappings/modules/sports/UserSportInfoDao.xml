@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.sports.dao.UserSportInfoDao">
+  <resultMap id="BaseResultMap" type="com.jeeplus.modules.sports.entity.UserSportInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="owner_id" jdbcType="INTEGER" property="ownerId" />
+    <result column="device_id" jdbcType="INTEGER" property="deviceId" />
+    <result column="video_id" jdbcType="INTEGER" property="videoId" />
+    <result column="distance" jdbcType="INTEGER" property="distance" />
+    <result column="sport_second" jdbcType="INTEGER" property="sportSecond" />
+    <result column="altitude" jdbcType="INTEGER" property="altitude" />
+    <result column="submit_time" jdbcType="TIMESTAMP" property="submitTime" />
+    <result column="current_time" property="currentTime" jdbcType="INTEGER" />
+    <result column="route_id" property="routeId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, owner_id, device_id, video_id, distance, sport_second, altitude, submit_time,
+    `current_time`, route_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_sport_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user_sport_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jeeplus.modules.sports.entity.UserSportInfo">
+    insert into t_user_sport_info (id, user_id, owner_id, 
+      device_id, video_id, distance, 
+      sport_second, altitude, submit_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{ownerId,jdbcType=INTEGER}, 
+      #{deviceId,jdbcType=INTEGER}, #{videoId,jdbcType=INTEGER}, #{distance,jdbcType=INTEGER}, 
+      #{sportSecond,jdbcType=INTEGER}, #{altitude,jdbcType=INTEGER}, #{submitTime,jdbcType=TIMESTAMP},
+      #{currentTime,jdbcType=INTEGER}, #{routeId,jdbcType=INTEGER})
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jeeplus.modules.sports.entity.UserSportInfo">
+    insert into t_user_sport_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="ownerId != null">
+        owner_id,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="videoId != null">
+        video_id,
+      </if>
+      <if test="distance != null">
+        distance,
+      </if>
+      <if test="sportSecond != null">
+        sport_second,
+      </if>
+      <if test="altitude != null">
+        altitude,
+      </if>
+      <if test="submitTime != null">
+        submit_time,
+      </if>
+      <if test="currentTime != null" >
+        `current_time`,
+      </if>
+      <if test="routeId != null" >
+        route_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="ownerId != null">
+        #{ownerId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="videoId != null">
+        #{videoId,jdbcType=INTEGER},
+      </if>
+      <if test="distance != null">
+        #{distance,jdbcType=INTEGER},
+      </if>
+      <if test="sportSecond != null">
+        #{sportSecond,jdbcType=INTEGER},
+      </if>
+      <if test="altitude != null">
+        #{altitude,jdbcType=INTEGER},
+      </if>
+      <if test="submitTime != null">
+        #{submitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentTime != null" >
+        #{currentTime,jdbcType=INTEGER},
+      </if>
+      <if test="routeId != null" >
+        #{routeId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jeeplus.modules.sports.entity.UserSportInfo">
+    update t_user_sport_info
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="ownerId != null">
+        owner_id = #{ownerId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="videoId != null">
+        video_id = #{videoId,jdbcType=INTEGER},
+      </if>
+      <if test="distance != null">
+        distance = #{distance,jdbcType=INTEGER},
+      </if>
+      <if test="sportSecond != null">
+        sport_second = #{sportSecond,jdbcType=INTEGER},
+      </if>
+      <if test="altitude != null">
+        altitude = #{altitude,jdbcType=INTEGER},
+      </if>
+      <if test="submitTime != null">
+        submit_time = #{submitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentTime != null" >
+        `current_time` = #{currentTime,jdbcType=INTEGER},
+      </if>
+      <if test="routeId != null" >
+        route_id = #{routeId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jeeplus.modules.sports.entity.UserSportInfo">
+    update t_user_sport_info
+    set user_id = #{userId,jdbcType=INTEGER},
+      owner_id = #{ownerId,jdbcType=INTEGER},
+      device_id = #{deviceId,jdbcType=INTEGER},
+      video_id = #{videoId,jdbcType=INTEGER},
+      distance = #{distance,jdbcType=INTEGER},
+      sport_second = #{sportSecond,jdbcType=INTEGER},
+      altitude = #{altitude,jdbcType=INTEGER},
+      submit_time = #{submitTime,jdbcType=TIMESTAMP},
+      `current_time` = #{currentTime,jdbcType=INTEGER},
+      route_id = #{routeId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getLastUserSportInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_user_sport_info
+    where submit_time =
+    (select MAX(submit_time)
+     from t_user_sport_info T1,t_user T2
+     where T1.user_id = T2.id and T2.uuid = #{uuid}
+    )
+  </select>
+</mapper>

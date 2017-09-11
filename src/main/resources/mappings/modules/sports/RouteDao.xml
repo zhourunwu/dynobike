@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.sports.dao.RouteDao"> 
+
+	<sql id="routeColumns">
+		route_id,
+		route_name,
+		creator_id,
+		route_intr,
+		route_photo_id,
+		create_time,
+		lastmodifytime,
+		isFree,
+		price
+	</sql>
+	
+    <resultMap type="com.jeeplus.modules.sports.entity.Route" id="routeResultMap">
+      
+        <!-- 配置映射的订单信息 -->  
+        <!-- id：指定查询列中的唯 一标识，订单信息的中的唯 一标识，如果有多个列组成唯一标识，配置多个id  
+            column：订单信息的唯 一标识 列  
+            property：订单信息的唯 一标识 列所映射到Orders中哪个属性  
+          -->  
+        <id 	column="route_id" property="route_id"/>  
+        <result column="route_name" property="route_name"/>  
+        <result column="creator_id" property="creator_id"/>  
+        <result column="route_intr" property="route_intr"/>  
+        <result column="route_photo_id" property="route_photo_id"/>       
+        <result column="create_time" property="create_time"/>  
+       	<result column="lastmodifytime" property="lastmodifytime"/>   
+        <result column="isFree" property="isFree"/>  
+        <result column="price" property="price"/>           
+    </resultMap>  
+    	
+<!--  查询所有记录  -->
+<!-- public List<Route> getAllRoutes(); -->
+<!-- <include refid="routeColumns"/>  -->
+<select id="getAllRoutes" resultMap="routeResultMap">
+	select 
+		*
+	from Route
+</select>
+
+<!-- public List<Route> findList(Route entity); -->
+<!-- <include refid="routeColumns"/>  -->
+<select id="findList" resultMap="routeResultMap">
+	SELECT 
+		*
+	FROM Route
+</select>
+
+<!--  查询所有记录  -->
+<!--  public List<Route> findAllList(Route entity);  -->
+<!-- <include refid="routeColumns"/>  -->
+<select id="findAllList" resultMap="routeResultMap">
+	SELECT
+		*
+	FROM Route
+</select>
+	
+<!-- public Route get(Route entity); -->
+<!-- <include refid="routeColumns"/>   -->
+<select id="get" resultMap="routeResultMap" parameterType="Route">
+	select
+		*
+	from Route where route_id=#{route_id}
+</select>
+
+<!-- public int	getCountOfRoutes(); -->
+<select id="getCountOfRoutes" resultType="int">
+	select count(*) from Route 
+</select>
+
+<!-- public int insert(Route entity);; -->
+<insert id="insert" parameterType="Route">
+	insert into Route(
+		route_name, 
+		creator_id,
+		route_intr, 
+		route_photo_id,
+		create_time, 
+		lastmodifytime,
+		isFree, 
+		price
+	) values(
+		#{route_name}, 
+		#{creator_id}, 
+		#{route_intr}, 
+		#{route_photo_id},
+		#{create_time}, 
+		#{lastmodifytime}, 
+		#{isFree}, 
+		#{price})
+</insert>	
+
+<!-- public int delete(Route entity); -->
+<delete id="delete" parameterType="Route">
+	delete from Route where route_id=#{route_id}
+</delete>
+
+<!-- public int update(Route entity); -->
+<update id="update" parameterType="Route">
+	update Route set
+		route_name = #{route_name}, 
+		creator_id = #{creator_id},
+		route_intr = #{route_intr}, 
+		route_photo_id = #{route_photo_id},
+		create_time = #{create_time}, 
+		lastmodifytime = #{lastmodifytime},
+		isFree = #{isFree}, 
+		price = #{price}
+		where route_id = #{route_id}
+</update>	
+	
+	
+</mapper>

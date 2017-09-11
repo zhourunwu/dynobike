@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jeeplus.modules.sports.dao.DeviceDao" >
+  <resultMap id="BaseResultMap" type="com.jeeplus.modules.sports.entity.Device" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="type_id" property="typeId" jdbcType="INTEGER" />
+    <result column="manufacturer_id" property="manufacturerId" jdbcType="INTEGER" />
+    <result column="owner_id" property="ownerId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+    <result column="manufacturer_name" property="manufacturerName" jdbcType="VARCHAR" />
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+<!--    <association property="typeName" column="type_id" jdbcType="VARCHAR" javaType="java.lang.String" select="com.jeeplus.modules.sports.dao.DeviceTypeDao.selectByTypeId">
+      <result column="type_name" jdbcType="VARCHAR"/>
+    </association>
+    <association property="manufacturerName" column="manufacturer_id" jdbcType="VARCHAR" javaType="java.lang.String" select="com.jeeplus.modules.sports.dao.ManufacturerDao.selectByManufacturerId">
+      <result column="name" jdbcType="VARCHAR"/>
+    </association>-->
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, uuid, type_id, manufacturer_id, create_time, note, token, owner_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_device
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_device
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jeeplus.modules.sports.entity.Device" >
+    insert into t_device (id, uuid, type_id, 
+      manufacturer_id, create_time, note, 
+      token, owner_id)
+    values (#{id,jdbcType=INTEGER}, #{uuid,jdbcType=VARCHAR}, #{typeId,jdbcType=INTEGER}, 
+      #{manufacturerId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{note,jdbcType=VARCHAR}, 
+      #{token,jdbcType=VARCHAR},#{ownerId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jeeplus.modules.sports.entity.Device" >
+    insert into t_device
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="manufacturerId != null" >
+        manufacturer_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="token != null" >
+        token,
+      </if>
+      <if test="ownerId != null" >
+        owner_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="manufacturerId != null" >
+        #{manufacturerId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null" >
+        #{ownerId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jeeplus.modules.sports.entity.Device" >
+    update t_device
+    <set >
+      <if test="uuid != null" >
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="manufacturerId != null" >
+        manufacturer_id = #{manufacturerId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerId != null" >
+        owner_id = #{ownerId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jeeplus.modules.sports.entity.Device" >
+    update t_device
+    set uuid = #{uuid,jdbcType=VARCHAR},
+      type_id = #{typeId,jdbcType=INTEGER},
+      manufacturer_id = #{manufacturerId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      note = #{note,jdbcType=VARCHAR},
+      token = #{token,jdbcType=VARCHAR},
+      owner_id = #{ownerId,jdbcType=INTEGER},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="search_query_sql">
+    from t_device T1
+    left join t_device_type  T2 on T1.type_id = T2.id
+    left join t_manufacturer T3 on T1.manufacturer_id = T3.id
+    left join t_owner        T4 on T1.owner_id = T4.id
+    where 1=1
+    <if test="searchName != null">
+      and   (T2.type_name like CONCAT('%', #{searchName}, '%') or T3.name like CONCAT('%', #{searchName}, '%') or note like CONCAT('%', #{searchName}, '%'))
+    </if>
+  </sql>
+  <select id="getDeviceList" parameterType="com.jeeplus.modules.sports.entity.Device" resultMap="BaseResultMap">
+    select
+    T1.id, T1.uuid, T1.type_id, T1.manufacturer_id, T1.owner_id, T1.create_time, T1.note, T1.token,CONCAT_WS('--',T2.type_name,T3.`name`) as'name',
+    T2.type_name as'type_name',T3.name as'manufacturer_name',T4.name as'owner_name'
+    <include refid="search_query_sql" />
+  </select>
+  <select id="getDeviceListCount" parameterType="com.jeeplus.modules.sports.entity.Device" resultType="java.lang.Integer">
+    select count(T1.id) <include refid="search_query_sql" />
+  </select>
+
+  <select id="getByUuid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_device
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getDeviceByToken" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from t_device
+    where token = #{tokenStr,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByDeviceId" resultType="java.lang.String" parameterType="java.lang.Integer" >
+    select
+    CONCAT_WS('--',T2.type_name,T3.`name`) as'name'
+    from t_device T1
+    left join t_device_type  T2 on T1.type_id = T2.id
+    left join t_manufacturer T3 on T1.manufacturer_id = T3.id
+    where T1.id = #{device_id,jdbcType=INTEGER}
+  </select>
+</mapper>

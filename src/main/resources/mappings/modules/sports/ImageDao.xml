@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.sports.dao.ImageDao"> 
+
+<resultMap type="com.jeeplus.modules.sports.entity.Image" id="imageResultMap">
+      
+	<!-- 配置映射的订单信息 -->  
+    <!-- id：指定查询列中的唯 一标识，订单信息的中的唯 一标识，如果有多个列组成唯一标识，配置多个id  
+         column：订单信息的唯 一标识 列  
+         property：订单信息的唯 一标识 列所映射到Orders中哪个属性  
+    -->  
+    <id 	column="img_id" 		property="img_id"/>  
+    <result column="img_name" 		property="img_name"/>  
+    <result column="creator_id" 	property="creator_id"/>  
+    <result column="create_time" 	property="create_time"/>  
+    <result column="img_url" 		property="img_url"/>       
+    <result column="isuploaded" 	property="isuploaded"/>          
+</resultMap>  
+    
+<!--  查询所有记录  -->
+<!-- public List<Image> getAllImages(); -->
+<select id="getAllImages" resultMap="imageResultMap">
+	select * from image
+</select>
+
+<!--  -->
+<!-- public Image getImageByName(String image_name); -->
+<select id="getImageByName" resultMap="imageResultMap">
+	select * from image where img_name=#{0};
+</select>
+
+<!--  查询所有记录  -->
+<!-- public Image get(Image image); -->
+<select id="get" resultMap="imageResultMap" parameterType="Image">
+	select * from image where img_id=#{img_id}
+</select>
+
+<!-- public int	insert(Image image); -->
+<insert id="insert" useGeneratedKeys="true" keyProperty="img_id" parameterType="Image">
+	 insert into image(
+	 	img_name, 
+	 	creator_id, 
+	 	create_time, 
+	 	img_url, 
+	 	isuploaded
+	 )
+	 values(
+	 	#{img_name}, 
+	 	#{creator_id}, 
+	 	#{create_time}, 
+	 	#{img_url}, 
+	 	#{isuploaded});
+</insert>
+
+<!-- public int	delete(Image image);  -->
+<delete id="delete" parameterType="Image">
+	delete from image where img_id=#{img_id};
+</delete>
+
+<!-- public int	update(Image image);  -->
+<update id="update" parameterType="Image">
+	update image set 
+		img_name 	= 	#{img_name}, 
+		creator_id	=	#{creator_id},
+		create_time	=	#{create_time}, 
+		img_url 	= 	#{img_url},
+		isuploaded 	= 	#{isuploaded}
+	where img_id = #{img_id}
+</update>
+
+</mapper>

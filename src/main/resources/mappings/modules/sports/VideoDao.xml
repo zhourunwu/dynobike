@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.sports.dao.VideoDao"> 
+
+<resultMap type="com.jeeplus.modules.sports.entity.Video" id="videoResultMap">
+      
+	<!-- 配置映射的订单信息 -->  
+    <!-- id：指定查询列中的唯 一标识，订单信息的中的唯 一标识，如果有多个列组成唯一标识，配置多个id  
+         column：订单信息的唯 一标识 列  
+         property：订单信息的唯 一标识 列所映射到Orders中哪个属性  
+    -->  
+    <id 	column="video_id" 		property="video_id"/>  
+    <result column="route_id" 		property="route_id"/>  
+    <result column="video_seq"		property="video_seq"/>
+    <result column="video_name" 	property="video_name"/>  
+    <result column="creator_id" 	property="creator_id"/>  
+    <result column="video_intr" 	property="video_intr"/>       
+    <result column="video_photo_id" property="video_photo_id"/>          
+	
+    <result column="create_time" 	property="create_time"/>  
+    <result column="lastmodifytime" property="lastmodifytime"/>       
+    <result column="isFree" 		property="isFree"/> 
+	
+    <result column="price" 			property="price"/>  
+    <result column="lastmodifytime" property="lastmodifytime"/>       
+    <result column="videofile_url" 	property="videofile_url"/> 
+		
+</resultMap> 
+
+<!--  查询所有记录  -->
+<!--  public List<Video> findList(Video entity); -->
+<select id="findList" resultMap="videoResultMap" parameterType="Video">
+	select * from Video
+</select>
+
+<!--  查询所有记录  -->
+<!--  public List<Video> findAllList(Video entity); -->
+<select id="findAllList" resultMap="videoResultMap" parameterType="Video">
+	select * from Video
+</select>
+
+<!-- public List<Video> getAllRouteVideos(); -->
+<select id="getAllRouteVideos" resultMap="videoResultMap">
+	select * from Video
+</select>
+
+<!-- public List<Video>	getVideosByRouteId(int route_id); -->
+<select id="getVideosByRouteId" resultMap="videoResultMap">
+	select * from Video where route_id=#{0}
+</select>
+
+<!-- public Video	getVideoByVideoId(int video_id); -->
+<!--  
+<select id="getVideoByVideoId" resultType="Video">
+	select * from Video where video_id=#{0};
+</select>
+-->
+
+<!-- public Video get(Video entity); -->
+<select id="get" resultMap="videoResultMap" parameterType="Video">
+	select * from Video where video_id=#{video_id}
+</select>
+
+<!-- public int	insert(Video video); -->
+<insert id="insert" parameterType="Video">
+	insert into Video(
+		route_id, 
+		video_name,
+		creator_id, 
+		video_intr, 
+		video_photo_id, 
+		create_time,
+		lastmodifytime, 
+		isFree, 
+		price, 
+		videofile_url
+	) 
+	values(
+		#{route_id}, 
+		#{video_name},
+		#{creator_id}, 
+		#{video_intr}, 
+		#{video_photo_id}, 
+		#{create_time}, 
+		#{lastmodifytime}, 
+		#{isFree}, 
+		#{price}, 
+		#{videofile_url})
+</insert>
+
+<!-- public int	delete(Video video);-->
+<delete id="delete" parameterType="Video">
+	delete from Video where video_id=#{video_id}
+</delete>
+
+<!-- public int	update(Video video); -->
+<update id="update" parameterType="Video">
+	update Video set
+		route_id   = #{route_id}, 	
+		video_name = #{video_name},
+		creator_id = #{creator_id}, 
+		video_intr = #{video_intr},
+		video_photo_id = #{video_photo_id}, 
+		create_time = #{create_time},
+		lastmodifytime = #{lastmodifytime}, 
+		isFree = #{isFree},
+		price = #{price}, 
+		videofile_url = #{videofile_url}
+	where video_id=#{video_id};
+</update>	
+		
+</mapper>
